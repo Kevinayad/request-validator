@@ -15,10 +15,18 @@ client.on("connect", function() {
     
     const validatorTopic = topics.validatorTopic;
 
-    client.subscribe(validatorTopic);
-    console.log("Subscribed to: " + validatorTopic);
+    function subscribe(topic) {
+        client.subscribe(topic);
+        console.log("Subscribed to: " + topic);
+    }
+    
+    function publish(topic, message) {
+        client.publish(topic, message);
+    }
 
-    client.publish(validatorTopic, 'Validate this: ...');
+    subscribe(validatorTopic);
+
+    publish(validatorTopic, 'Validate this: ...');
 })
 
 client.on('message', function(topic, message) {
