@@ -9,7 +9,24 @@ const host = localHost;
 
 const port = ':1883';
 
-var client = mqtt.connect(host+port);
+const options = {
+    keepalive: 60,
+	protocolId: 'MQTT',
+	protocolVersion: 4,
+	clean: true,
+	reconnectPeriod: 1000,
+	connectTimeout: 30 * 1000,
+	will: {
+		topic: 'WillMsg',
+		payload: 'Connection Closed abnormally..!',
+		qos: 1,
+		retain: false
+	},
+    hostURL: (host+port)
+}
+
+const client = mqtt.connect(options.hostURL, options);
+
 
 client.on("connect", function() {
     
@@ -26,7 +43,7 @@ client.on("connect", function() {
 
     subscribe(validatorTopic);
 
-    publish(validatorTopic, 'Validate this: ...');
+    publish(validatorTopic, 'Validate this: ...', { qos: 1, retain:false });
 })
 
 client.on('message', function(topic, message) {
