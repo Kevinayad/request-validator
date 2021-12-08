@@ -1,6 +1,7 @@
 const mqtt = require("mqtt");
 const topics = require("./topics");
-
+const validatorTopic = topics.validatorTopic;
+const handlerTopic = topics.bookingHandlerTopic;
 const localHost = 'mqtt://127.0.0.1'; // Local host
 const remoteHost = ''; // Remote host
 
@@ -27,25 +28,26 @@ const options = {
 
 const client = mqtt.connect(options.hostURL, options);
 
+function publish(topic, message) {
+    client.publish(topic, message);
+}
 
 client.on("connect", function() {
     
-    const validatorTopic = topics.validatorTopic;
-
     function subscribe(topic) {
         client.subscribe(topic);
         console.log("Subscribed to: " + topic);
     }
-    
-    function publish(topic, message) {
-        client.publish(topic, message);
-    }
-
-    subscribe(validatorTopic);
+    subscribe(handlerTopic);
 
     publish(validatorTopic, 'Validate this: ...', { qos: 1, retain:false });
 })
 
 client.on('message', function(topic, message) {
+    if (topic == handlerTopic){
+        //TODO: check for availability before next line is executed
+        //send appointment to backend for persisting data
+        publish(validatorTopic, message, { qos: 1, retain:false });
+    }
     console.log(message.toString());
 })
