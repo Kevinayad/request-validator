@@ -2,7 +2,7 @@
 
 ## Description
 
-This component has the following responsibilities:
+## Component Responsibilities
 * Check if booking requests are valid, before being stored
 * Process the valid requests and check that the time slot is not booked by multiple users simultanously
 
@@ -22,9 +22,9 @@ This component has the following responsibilities:
 1. 
 
 ## Development Team
-- Gianmarco Iachella
-- Jihan Phanivong
-- Kamila Yosofi
-- Kevin Ayad
-- Markus Emilio Puerto Gutiérrez
-- Markus Järveläinen
+* Gianmarco Iachella
+* Jihan Phanivong
+* Kamila Yosofi
+* Kevin Ayad
+* Markus Emilio Puerto Gutiérrez
+* Markus Järveläinen
