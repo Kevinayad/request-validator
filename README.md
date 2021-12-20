@@ -2,7 +2,7 @@
 
 ## Description
 
-## Component Responsibilities
+### Component responsibilities
 * Check if booking requests are valid, before being stored
 * Process the valid requests and check that the time slot is not booked by multiple users simultanously
 
