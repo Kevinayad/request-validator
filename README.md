@@ -1,8 +1,8 @@
-# Team-12 | Dentistimo - Request Validator Component  
+# Team-12 | Dentistimo - Request-validator Component  
 
 ## Description
 
-This component is responible of:
+This component is responible for the following:
 
 * Check if a booking request is valid by requesting time slot availability from the Backend component
 * Prevent that two users book the same time
