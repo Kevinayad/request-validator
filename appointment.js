@@ -1,9 +1,8 @@
 const database= require("./database.js");
-
+const broker= require("./broker/broker.js")
 async function checkAppointment(appointment) {
     var r;
     var res = await database.showSchedule(r);
-    console.log(res);
     var clinicID = appointment.dentistid;
     var date = new Date(appointment.date);
     var day = date.getDay();
@@ -14,27 +13,21 @@ async function checkAppointment(appointment) {
     date.setTime(date.getTime() + (1*60*60*1000));
     var check = false;
     var clinicName = 'Clinic' + (clinicID);
-    var clinic = result[clinicName];
+    var clinic = res[clinicName];
     const allDays = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
     var daySchedule = clinic[allDays[day]];
+    //console.log(daySchedule);
     var slot = daySchedule[time];
+    //console.log(slot);
     var slotTime = slot.time;
     if (date.getTime() == slotTime.getTime() && slot.av == true) {
-        slot.av = false;
-        await scheduleCollection.deleteOne({}, function (err, res) {
-            if (err) {throw err};
-            console.log('First schedule removed');
-        });
-        await scheduleCollection.insertOne(result, function (err, res) {
-            if (err) {throw err};
-            console.log('Second schedule added');
-        });
         check = true;
+        
     }
     if (check) {
-        return 1;
+        broker.publish(broker.validatorTopic,"true");
     } else {
-        return -1;
+        broker.publish(broker.validatorTopic,"false");
     }
 }
 exports.checkAppointment = checkAppointment;

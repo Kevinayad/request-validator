@@ -44,13 +44,12 @@ var dummy={
     "requestid": 13,
     "dentistid": 1,
     "issuance": 1602406766314,
-    "date": "2020-12-14",
-    "time": "11:00"
+    "date": "2022-01-03",
+    "time": "12:30"
   }
 client.on("connect", function() {
     
     console.log("Connecting mqtt client");
-    
     subscribe(handlerTopic);
    var dum= JSON.stringify(dummy);
     publish(handlerTopic,dum);
@@ -61,8 +60,10 @@ client.on('message', function(topic, message) {
         //TODO: check for availability before next line is executed
         //send appointment to backend for persisting data
         var mes=JSON.parse(message);
-            vald.checkAppointment(mes);
+        vald.checkAppointment(mes);
         // publish(validatorTopic, message, { qos: 1, retain:false });
     }
-    console.log(JSON.parse(message));
+   // console.log(JSON.parse(message));
 })
+exports.publish=publish;
+exports.validatorTopic=validatorTopic;
