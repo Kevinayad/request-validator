@@ -25,7 +25,8 @@ async function checkAppointment(appointment) {
         
     }
     if (check) {
-        broker.publish(broker.validatorTopic,"true");
+        var test= JSON.stringify(appointment);
+        broker.publish(broker.validatorTopic,test);
     } else {
         broker.publish(broker.validatorTopic,"false");
     }

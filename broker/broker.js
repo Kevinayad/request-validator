@@ -39,31 +39,16 @@ function subscribe(topic) {
     client.subscribe(topic);
     console.log("Subscribed to: " + topic, { qos: 2 });
 }
-var dummy={
-    "userid": 12345,
-    "requestid": 13,
-    "dentistid": 1,
-    "issuance": 1602406766314,
-    "date": "2022-01-03",
-    "time": "12:30"
-  }
 client.on("connect", function() {
     
     console.log("Connecting mqtt client");
     subscribe(handlerTopic);
-   var dum= JSON.stringify(dummy);
-    publish(handlerTopic,dum);
 })
-
 client.on('message', function(topic, message) {
     if (topic == handlerTopic){
-        //TODO: check for availability before next line is executed
-        //send appointment to backend for persisting data
         var mes=JSON.parse(message);
         vald.checkAppointment(mes);
-        // publish(validatorTopic, message, { qos: 1, retain:false });
     }
-   // console.log(JSON.parse(message));
 })
 exports.publish=publish;
 exports.validatorTopic=validatorTopic;
