@@ -1,9 +1,9 @@
 const database= require("./database.js");
 
 async function checkAppointment(appointment) {
-    var s;
-    await database.run(s);
-    console.log(s);
+    var r;
+    var res = await database.showSchedule(r);
+    console.log(res);
     var clinicID = appointment.dentistid;
     var date = new Date(appointment.date);
     var day = date.getDay();
