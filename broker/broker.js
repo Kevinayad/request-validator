@@ -1,5 +1,7 @@
 const mqtt = require("mqtt");
 const topics = require("./topics");
+const vald = require("../appointment.js");
+const { measureMemory } = require("vm");
 const validatorTopic = topics.validatorTopic;
 const handlerTopic = topics.bookingHandlerTopic;
 const host = "ws://broker.emqx.io:8083/mqtt"
@@ -33,22 +35,20 @@ const client = mqtt.connect(host, options);
 function publish(topic, message) {
     client.publish(topic, message, { qos: 1, retain:false });
 }
-
+function subscribe(topic) {
+    client.subscribe(topic);
+    console.log("Subscribed to: " + topic, { qos: 2 });
+}
 client.on("connect", function() {
     
     console.log("Connecting mqtt client");
-    function subscribe(topic) {
-        client.subscribe(topic);
-        console.log("Subscribed to: " + topic, { qos: 2 });
-    }
     subscribe(handlerTopic);
 })
-
 client.on('message', function(topic, message) {
     if (topic == handlerTopic){
-        //TODO: check for availability before next line is executed
-        //send appointment to backend for persisting data
-        publish(validatorTopic, message, { qos: 1, retain:false });
+        var mes=JSON.parse(message);
+        vald.checkAppointment(mes);
     }
-    console.log(JSON.parse(message));
 })
+exports.publish=publish;
+exports.validatorTopic=validatorTopic;
