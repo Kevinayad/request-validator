@@ -16,8 +16,8 @@ mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true }, 
     async function getSchedule(){
        return await scheduleCollection.findOne({});
     }
-    async function showSchedule(t){
-        t = await getSchedule();
+    async function showSchedule(schedule){
+        schedule = await getSchedule();
         return t;
     }     
     exports.showSchedule=showSchedule;

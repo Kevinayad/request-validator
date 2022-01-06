@@ -1,8 +1,8 @@
 const database= require("./database.js");
 const broker= require("./broker/broker.js")
 async function checkAppointment(appointment) {
-    var r;
-    var res = await database.showSchedule(r);
+    var schedule;
+    var res = await database.showSchedule(schedule);
     var clinicID = appointment.dentistid;
     var date = new Date(appointment.date);
     var day = date.getDay();
