@@ -18,6 +18,6 @@ mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true }, 
     }
     async function showSchedule(schedule){
         schedule = await getSchedule();
-        return t;
+        return schedule;
     }     
     exports.showSchedule=showSchedule;
