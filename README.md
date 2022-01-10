@@ -18,15 +18,17 @@ This component is responible for the following:
 This repository additionally contains technologies and/or parts of code licensed under the following:
 * To be added
 
-## Get Started Guide
-
 ### Install
 
-1. 
+1. npm install
 
 ### Running the Request Validator component
 
-1. 
+1. npm run dev
+
+## Component Diagram
+
+![Component Diagram](./Component_Diagram.png)
 
 ## Development Team
 
