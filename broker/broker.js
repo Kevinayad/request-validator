@@ -31,7 +31,15 @@ const options = {
 }
 
 const client = mqtt.connect(host, options);
-
+// var dummy={
+//     "userid": 12345,
+//     "requestid": 13,
+//     "dentistid": 1,
+//     "issuance": 1602406766314,
+//     "date": "2022-01-03",
+//     "time": "12:30"
+//   }
+//   var dum=JSON.stringify(dummy);
 function publish(topic, message) {
     client.publish(topic, message, { qos: 1, retain:false });
 }
@@ -40,13 +48,14 @@ function subscribe(topic) {
     console.log("Subscribed to: " + topic, { qos: 2 });
 }
 client.on("connect", function() {
-    
+    publish(validatorTopic,"false");
     console.log("Connecting mqtt client");
     subscribe(handlerTopic);
 })
 client.on('message', function(topic, message) {
     if (topic == handlerTopic){
         var mes=JSON.parse(message);
+        console.log(mes);
         vald.checkAppointment(mes);
     }
 })
