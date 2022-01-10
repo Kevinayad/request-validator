@@ -5,20 +5,18 @@ async function checkAppointment(appointment) {
     var res = await database.showSchedule(schedule);
     var clinicID = appointment.dentistid;
     var date = new Date(appointment.date);
-    var day = date.getDay();
-    var time = appointment.time;
-    var hours = time.slice(0,2);
-    var minutes = time.slice(3,5);
-    date.setHours(hours,minutes,0);
-    date.setTime(date.getTime() + (1*60*60*1000));
+    var day = date.getDay()
+     var hours = addZero(date.getHours());
+     var minutes = addZero(date.getMinutes());
+     var time = hours+":"+minutes;
+     console.log(time);
+     date.setTime(date.getTime() + (1*60*60*1000));
     var check = false;
     var clinicName = 'Clinic' + (clinicID);
     var clinic = res[clinicName];
     const allDays = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
     var daySchedule = clinic[allDays[day]];
-    //console.log(daySchedule);
     var slot = daySchedule[time];
-    //console.log(slot);
     var slotTime = slot.time;
     if (date.getTime() == slotTime.getTime() && slot.av == true) {
         check = true;
@@ -27,8 +25,13 @@ async function checkAppointment(appointment) {
     if (check) {
         var test= JSON.stringify(appointment);
         broker.publish(broker.validatorTopic,test);
+        console.log(test);
     } else {
         broker.publish(broker.validatorTopic,"false");
     }
 }
+function addZero(i) {
+    if (i < 10) {i = "0" + i}
+    return i;
+  }
 exports.checkAppointment = checkAppointment;

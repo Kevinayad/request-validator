@@ -31,7 +31,6 @@ const options = {
 }
 
 const client = mqtt.connect(host, options);
-
 function publish(topic, message) {
     client.publish(topic, message, { qos: 1, retain:false });
 }
@@ -40,7 +39,7 @@ function subscribe(topic) {
     console.log("Subscribed to: " + topic, { qos: 2 });
 }
 client.on("connect", function() {
-    
+    publish(validatorTopic,"false");
     console.log("Connecting mqtt client");
     subscribe(handlerTopic);
 })
