@@ -31,15 +31,6 @@ const options = {
 }
 
 const client = mqtt.connect(host, options);
-// var dummy={
-//     "userid": 12345,
-//     "requestid": 13,
-//     "dentistid": 1,
-//     "issuance": 1602406766314,
-//     "date": "2022-01-03",
-//     "time": "12:30"
-//   }
-//   var dum=JSON.stringify(dummy);
 function publish(topic, message) {
     client.publish(topic, message, { qos: 1, retain:false });
 }
