@@ -55,7 +55,6 @@ client.on("connect", function() {
 client.on('message', function(topic, message) {
     if (topic == handlerTopic){
         var mes=JSON.parse(message);
-        console.log(mes);
         vald.checkAppointment(mes);
     }
 })
